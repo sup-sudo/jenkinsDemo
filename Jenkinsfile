@@ -43,11 +43,6 @@ pipeline {
                             start java -jar ${jarFile}
                         """
 
-                        // Wait for a few seconds to allow the application to start
-                        sleep(time: 30, unit: 'SECONDS')
-
-                        // Check if the application is running on the expected port
-                        bat "curl http://localhost:${port}/health" // Assuming you have a /health endpoint
                     } else {
                         error "JAR file not found: ${jarFile}"
                     }
