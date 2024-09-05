@@ -29,22 +29,23 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                script {
-                    // Find the JAR file created during the build (you can modify the path if needed)
-                    def jarFile = findFiles(glob: '**/target/*.jar')[0].path
+                // Assuming your JAR file is always in target/ after build
+                def jarFile = "target/your-application.jar" // Replace with your actual JAR file name
 
-                    // Run the application on the specified port
-                    bat """
-                        echo Starting application from ${jarFile}...
-                        start java -jar ${jarFile}
-                    """
-                }
+                // Run the application on the specified port
+                bat """
+                    echo Starting application from ${jarFile}...
+                    start java -jar ${jarFile}
+                """
             }
         }
     }
 
     post {
         always {
+            // Kill any Java process related to the application
+            bat 'taskkill /F /IM java.exe /T'
+
             // Clean up the workspace after the pipeline
             cleanWs()
         }
