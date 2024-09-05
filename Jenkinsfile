@@ -15,15 +15,15 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                // Clean and build the project using Maven
-                sh 'mvn clean install'
+                // Clean and build the project using Maven (for Windows)
+                bat 'mvn clean install'
             }
         }
 
         stage('Test') {
             steps {
-                // Run the tests using Maven
-                sh 'mvn test'
+                // Run the tests using Maven (for Windows)
+                bat 'mvn test'
             }
         }
     }
