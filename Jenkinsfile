@@ -26,6 +26,21 @@ pipeline {
                 bat 'mvn test'
             }
         }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    // Find the JAR file created during the build (you can modify the path if needed)
+                    def jarFile = findFiles(glob: '**/target/*.jar')[0].path
+
+                    // Run the application on the specified port
+                    bat """
+                        echo Starting application from ${jarFile}...
+                        start java -jar ${jarFile}
+                    """
+                }
+            }
+        }
     }
 
     post {
@@ -35,11 +50,11 @@ pipeline {
         }
 
         success {
-            echo 'Build and test successful!'
+            echo 'Build, test, and deployment successful!'
         }
 
         failure {
-            echo 'Build or test failed!'
+            echo 'Build, test, or deployment failed!'
         }
     }
 }
