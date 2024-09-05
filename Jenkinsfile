@@ -44,7 +44,7 @@ pipeline {
                         """
 
                         // Wait for a few seconds to allow the application to start
-                        sleep(time: 30, unit: 'SECONDS')
+                       //sleep(time: 30, unit: 'SECONDS')
 
                         // Check if the application is running on the expected port
                         bat "curl http://localhost:${port}/api/v1/jenkins-demo/list" // Assuming you have a /health endpoint
