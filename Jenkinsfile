@@ -40,8 +40,14 @@ pipeline {
                         // Run the JAR file in the background on Windows
                         bat """
                             echo Starting application from ${jarFile} on port ${port}...
-                            start java -jar ${jarFile}
+                            start /B java -jar ${jarFile}
                         """
+
+                        // Optional: Monitor the application or check status here
+                        sleep(time: 60, unit: 'SECONDS') // Wait to ensure the application starts properly
+
+                        // Check if the application is running on the expected port
+                        bat "curl -I http://localhost:${port}/api/v1/jenkins-demo/list" // Adjust the URL and endpoint as needed
                     } else {
                         error "JAR file not found: ${jarFile}"
                     }
@@ -51,10 +57,10 @@ pipeline {
     }
 
     post {
-       always {
+        always {
             // Clean up the workspace after the pipeline
-          cleanWs()
-       }
+            cleanWs()
+        }
 
         success {
             echo 'Build, test, and deployment successful!'
