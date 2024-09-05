@@ -52,10 +52,10 @@ pipeline {
     }
 
     post {
-        always {
+//        always {
             // Clean up the workspace after the pipeline
-            cleanWs()
-        }
+  //          cleanWs()
+     //   }
 
         success {
             echo 'Build, test, and deployment successful!'
