@@ -42,7 +42,6 @@ pipeline {
                             echo Starting application from ${jarFile} on port ${port}...
                             start java -jar ${jarFile}
                         """
-                        sleep(time: 30, unit: 'SECONDS')
                     } else {
                         error "JAR file not found: ${jarFile}"
                     }
