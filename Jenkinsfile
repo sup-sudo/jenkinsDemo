@@ -31,7 +31,7 @@ pipeline {
             steps {
                 script {
                     def jarFile = "target/jenkinsdemo-0.0.1-SNAPSHOT.jar" // Define the JAR file name
-                    def port = 8083 // Replace with the port your application should use
+                    def port = 8080 // Replace with the port your application should use
 
                     // Ensure the JAR file exists before proceeding
                     if (fileExists(jarFile)) {
@@ -40,9 +40,14 @@ pipeline {
                         // Run the JAR file in the background on Windows
                         bat """
                             echo Starting application from ${jarFile} on port ${port}...
-                            start /B java -jar ${jarFile}
+                            start java -jar ${jarFile}
                         """
 
+                        // Wait for a few seconds to allow the application to start
+                        sleep(time: 30, unit: 'SECONDS')
+
+                        // Check if the application is running on the expected port
+                        bat "curl http://localhost:${port}/health" // Assuming you have a /health endpoint
                     } else {
                         error "JAR file not found: ${jarFile}"
                     }
