@@ -26,34 +26,6 @@ pipeline {
                 bat 'mvn test'
             }
         }
-
-        stage('Deploy') {
-            steps {
-                script {
-                    def jarFile = "target/jenkinsdemo-0.0.1-SNAPSHOT.jar" // Define the JAR file name
-                    def port = 8080 // Replace with the port your application should use
-
-                    // Ensure the JAR file exists before proceeding
-                    if (fileExists(jarFile)) {
-                        echo "Deploying ${jarFile}..."
-
-                        // Run the JAR file in the background on Windows
-                        bat """
-                            echo Starting application from ${jarFile} on port ${port}...
-                            start java -jar ${jarFile}
-                        """
-
-                        // Wait for a few seconds to allow the application to start
-                       //sleep(time: 30, unit: 'SECONDS')
-
-                        // Check if the application is running on the expected port
-                        bat "curl http://localhost:${port}/api/v1/jenkins-demo/list" // Assuming you have a /health endpoint
-                    } else {
-                        error "JAR file not found: ${jarFile}"
-                    }
-                }
-            }
-        }
     }
 
     post {
@@ -63,11 +35,11 @@ pipeline {
         }
 
         success {
-            echo 'Build, test, and deployment successful!'
+            echo 'Build and test successful!'
         }
 
         failure {
-            echo 'Build, test, or deployment failed!'
+            echo 'Build or test failed!'
         }
     }
 }
