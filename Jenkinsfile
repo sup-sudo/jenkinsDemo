@@ -26,6 +26,29 @@ pipeline {
                 bat 'mvn test'
             }
         }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    def jarFile = "target/jenkinsdemo-0.0.1-SNAPSHOT.jar" // Replace with your actual JAR file name
+
+                    // Ensure the JAR file exists before proceeding
+                    if (fileExists(jarFile)) {
+                        echo "Deploying ${jarFile}..."
+
+                        // Example: Copy the JAR file to a remote server using SCP
+                        // Note: You may need to configure credentials for this
+                        // Replace with your server details
+                        sh "scp ${jarFile} user@remote-server:/path/to/deploy/"
+
+                        // Example: Run the JAR file on the remote server (if needed)
+                        // sh "ssh user@remote-server 'java -jar /path/to/deploy/${jarFile}'"
+                    } else {
+                        error "JAR file not found: ${jarFile}"
+                    }
+                }
+            }
+        }
     }
 
     post {
@@ -35,11 +58,11 @@ pipeline {
         }
 
         success {
-            echo 'Build and test successful!'
+            echo 'Build, test, and deployment successful!'
         }
 
         failure {
-            echo 'Build or test failed!'
+            echo 'Build, test, or deployment failed!'
         }
     }
 }
