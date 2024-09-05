@@ -13,13 +13,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                // Check out the code from your local Git repository
-                git 'file:///path/to/your/local/repo.git'
-            }
-        }
-
         stage('Build') {
             steps {
                 // Clean and build the project using Maven
@@ -33,23 +26,6 @@ pipeline {
                 sh 'mvn test'
             }
         }
-
-        stage('Package') {
-            steps {
-                // Package the application
-                sh 'mvn package'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                // Deploy the application locally
-                // Example: Copy the JAR file to a local directory
-                sh 'cp target/your-application.jar /path/to/deployment/directory'
-                // You can start the application here as well
-                // sh 'java -jar /path/to/deployment/directory/your-application.jar'
-            }
-        }
     }
 
     post {
@@ -59,11 +35,11 @@ pipeline {
         }
 
         success {
-            echo 'Build, test, and deployment successful!'
+            echo 'Build and test successful!'
         }
 
         failure {
-            echo 'Build, test, or deployment failed!'
-       }
+            echo 'Build or test failed!'
+        }
     }
 }
