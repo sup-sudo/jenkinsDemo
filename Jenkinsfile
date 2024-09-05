@@ -31,7 +31,7 @@ pipeline {
             steps {
                 script {
                     def jarFile = "target/jenkinsdemo-0.0.1-SNAPSHOT.jar" // Define the JAR file name
-                    def port = 8080 // Replace with the port your application should use
+                    def port = 8083 // Replace with the port your application should use
 
                     // Ensure the JAR file exists before proceeding
                     if (fileExists(jarFile)) {
