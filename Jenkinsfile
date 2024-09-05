@@ -29,14 +29,16 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                // Assuming your JAR file is always in target/ after build
-                def jarFile = "target/your-application.jar" // Replace with your actual JAR file name
+                script {
+                    // Assuming your JAR file is always in target/ after build
+                    def jarFile = "target/your-application.jar" // Replace with your actual JAR file name
 
-                // Run the application on the specified port
-                bat """
-                    echo Starting application from ${jarFile}...
-                    start java -jar ${jarFile}
-                """
+                    // Run the application on the specified port
+                    bat """
+                        echo Starting application from ${jarFile}...
+                        start java -jar ${jarFile}
+                    """
+                }
             }
         }
     }
