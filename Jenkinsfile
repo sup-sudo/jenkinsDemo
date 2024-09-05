@@ -42,7 +42,7 @@ pipeline {
                             echo Starting application from ${jarFile} on port ${port}...
                             start java -jar ${jarFile}
                         """
-
+                        sleep(time: 30, unit: 'SECONDS')
                     } else {
                         error "JAR file not found: ${jarFile}"
                     }
@@ -52,10 +52,10 @@ pipeline {
     }
 
     post {
-//        always {
+       always {
             // Clean up the workspace after the pipeline
-  //          cleanWs()
-     //   }
+          cleanWs()
+       }
 
         success {
             echo 'Build, test, and deployment successful!'
