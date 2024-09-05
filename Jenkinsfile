@@ -43,11 +43,6 @@ pipeline {
                             start /B java -jar ${jarFile}
                         """
 
-                        // Optional: Monitor the application or check status here
-                        sleep(time: 60, unit: 'SECONDS') // Wait to ensure the application starts properly
-
-                        // Check if the application is running on the expected port
-                        bat "curl -I http://localhost:${port}/api/v1/jenkins-demo/list" // Adjust the URL and endpoint as needed
                     } else {
                         error "JAR file not found: ${jarFile}"
                     }
